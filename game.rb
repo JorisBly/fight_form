@@ -1,21 +1,30 @@
 require 'ruby2d'
+require './map'
+require './coin'
 class Game
-  attr_accessor :x_width, :y_height , :coins
-  def initialize(x_width, y_height, player, background)
+  attr_accessor :x_width, :y_height ,:time_start, :elapsed, :map
+  def initialize(x_width, y_height, player)
     @player = player
-    @background = background
+    # @background = background
     @x_width = x_width
     @y_height = y_height
-    @coins = []
   end
 
-  def start()
-    for i in 1..10
-      @coins.push(Collectible.new('media/coin.png', x: rand(WIDTH), y: rand(HEIGHT), width: 32, height: 32))
-    end
+  def start
+      self.time_start = Time.now
+      @map = Map.new('media/map_1.txt')
   end
 
-  def update()
-    puts "Game updated"
+  def update
+    if @map.coins.length === 0
+      self.end_game
+      end
+  end
+  def elapsed
+    Time.now - @time_start
+  end
+
+  def end_game
+    close
   end
 end
