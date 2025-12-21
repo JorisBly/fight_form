@@ -45,22 +45,16 @@ class Player < Sprite
   end
 
   def catch_coin(coins)
-    catched = false
-    coins.each do |coin|
+    add_point if coins.find do |coin|
       puts "xcoin : #{coin.x} ycoin : #{coin.y} | player : #{x} #{y}"
-      catched = coin.catched(@x, @y)
-      add_point
-      break if catched
+      coin.catched(@x, @y)
     end
   end
 
   def check_collision(obstacles, position_x, position_y)
-    collision = false
-    obstacles.each do |obstacle|
-      collision = obstacle.collision(position_x, position_y)
+    obstacles.find do |obstacle|
       obstacle.play_sound
-      break if collision
+      obstacle.collision(position_x, position_y)
     end
-    collision
   end
 end
