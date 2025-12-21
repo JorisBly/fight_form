@@ -10,14 +10,4 @@ class Wall < Sprite
   def play_sound
     @sound.play
   end
-
-  def collision(position_x, position_y)
-    if x === position_x  && y === position_y && !path.include?("terrain")
-      puts "Collision !"
-      true
-    else
-      false
-    end
-  end
-
 end

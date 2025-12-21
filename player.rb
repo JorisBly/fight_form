@@ -39,9 +39,8 @@ class Player < Sprite
   end
 
   def check_collision(obstacles, position_x, position_y)
-    obstacles.find do |obstacle|
-      obstacle.play_sound
-      obstacle.collision(position_x, position_y)
-    end
+    return false unless obstacle = obstacles.find { |obstacle| obstacle.x == position_x && obstacle.y == position_y }
+    obstacle.play_sound
+    true
   end
 end
