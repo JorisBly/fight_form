@@ -67,10 +67,7 @@ class Game
     @player_position.text = "x: #{@player.x} y: #{@player.y}"
     @player_points.text = "Points: #{@player.points}"
     @timer.text = "Time: #{Time.at(elapsed).utc.strftime("%M:%S")}"
-    end_game if @map.coins.empty?
-    if Time.now - time_start > 60
-      @window.close
-    end
+    end_game if @map.coins.empty? || elapsed > 60
   end
 
   def elapsed
