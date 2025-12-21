@@ -12,7 +12,7 @@ class Wall < Sprite
   end
 
   def collision(position_x, position_y)
-    if self.x === position_x  && self.y === position_y && !self.path.include?("terrain")
+    if x === position_x  && y === position_y && !path.include?("terrain")
       puts "Collision !"
       true
     else

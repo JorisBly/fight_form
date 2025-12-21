@@ -11,30 +11,30 @@ class Player < Sprite
   end
 
   def move_right(movement, coins, obstacles)
-    unless self.check_collision(obstacles, @x + movement, @y)
+    unless check_collision(obstacles, @x + movement, @y)
       self.x += movement
     end
-      self.catch_coin(coins)
+      catch_coin(coins)
   end
   def move_left(movement,coins, obstacles)
-    unless self.check_collision(obstacles, @x - movement, @y)
+    unless check_collision(obstacles, @x - movement, @y)
     self.x += -movement
     end
-    self.catch_coin(coins)
+    catch_coin(coins)
   end
 
   def move_up(movement,coins, obstacles)
-    unless self.check_collision(obstacles, @x, @y - movement)
+    unless check_collision(obstacles, @x, @y - movement)
       self.y += -movement
     end
-      self.catch_coin(coins)
+      catch_coin(coins)
   end
 
   def move_down(movement, coins, obstacles)
-    unless self.check_collision(obstacles, @x, @y + movement)
+    unless check_collision(obstacles, @x, @y + movement)
     self.y += movement
     end
-    self.catch_coin(coins)
+    catch_coin(coins)
   end
 
   def add_point(point = 1)
@@ -47,9 +47,9 @@ class Player < Sprite
   def catch_coin(coins)
     catched = false
     coins.each do |coin|
-      puts "xcoin : #{coin.x} ycoin : #{coin.y} | player : #{self.x} #{self.y}"
+      puts "xcoin : #{coin.x} ycoin : #{coin.y} | player : #{x} #{y}"
       catched = coin.catched(@x, @y)
-        self.add_point
+        add_point
       break if catched
     end
   end

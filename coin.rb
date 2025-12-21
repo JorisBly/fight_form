@@ -7,7 +7,7 @@ class Coin < Sprite
   end
 
   def destroy
-    self.remove
+    remove
   end
 
   def play_sound
@@ -15,9 +15,9 @@ class Coin < Sprite
   end
 
   def catched(position_x, position_y)
-    if self.x === position_x  && self.y === position_y
+    if x === position_x  && y === position_y
       puts "Catched !"
-      self.destroy
+      destroy
       true
     else
       false
