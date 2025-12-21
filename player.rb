@@ -15,6 +15,7 @@ class Player < Sprite
     when Coin
       tile.play_sound
       tile.remove
+      map.tiles.delete(tile)
       add_point
       @x += delta_x
       @y += delta_y
