@@ -11,8 +11,6 @@ class Game
 
     @player = Player.new(
       'Joris',
-      WIDTH,
-      HEIGHT,
       'media/player.png',
       x: 30,
       y: 30,
@@ -21,10 +19,6 @@ class Game
       z: 100,
       show: true
     )
-
-    # @background = background
-    @x_width = WIDTH
-    @y_height = HEIGHT
 
     @window.set viewport_width: WIDTH
     @window.set viewport_height: HEIGHT
@@ -36,9 +30,6 @@ class Game
     @player_position = Text.new("x: #{@player.x} y: #{@player.y}")
     @player_points = Text.new("Points: #{@player.points}", x: 120, y: 0, z: 10)
     @timer = Text.new("Time: #{elapsed}", x: 200, y: 0, z: 200)
-
-    @x_speed = 0
-    @y_speed = 0
 
     @window.on(:key_down) { |event| on_key_down(event) }
     @window.update { update }
@@ -63,7 +54,6 @@ class Game
   end
 
   def update
-    # @player.move(@x_speed, @y_speed, coins, map.tiles)
     @player_position.text = "x: #{@player.x} y: #{@player.y}"
     @player_points.text = "Points: #{@player.points}"
     @timer.text = "Time: #{Time.at(elapsed).utc.strftime("%M:%S")}"

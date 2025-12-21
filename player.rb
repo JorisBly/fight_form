@@ -1,11 +1,9 @@
 class Player < Sprite
   attr_reader :name, :points
 
-  def initialize(name, max_width, max_height, path, **args)
-    @name = name
+  def initialize(name, path, **args)
     super(path, **args)
-    @max_width = max_width
-    @max_height = max_height
+    @name = name
     @points = 0
     puts "Joueur initialisé: x=#{@x} y=#{@y} width=#{@width} height=#{@height}"
   end
@@ -31,9 +29,6 @@ class Player < Sprite
 
   def add_point(point = 1)
     @points += point
-  end
-  def get_points
-    @points
   end
 
   def catch_coin(coins)
