@@ -11,29 +11,21 @@ class Player < Sprite
   end
 
   def move_right(movement, coins, obstacles)
-    unless check_collision(obstacles, @x + movement, @y)
-      self.x += movement
-    end
+    self.x += movement unless check_collision(obstacles, @x + movement, @y)
     catch_coin(coins)
   end
   def move_left(movement,coins, obstacles)
-    unless check_collision(obstacles, @x - movement, @y)
-      self.x += -movement
-    end
+    self.x += -movement unless check_collision(obstacles, @x - movement, @y)
     catch_coin(coins)
   end
 
   def move_up(movement,coins, obstacles)
-    unless check_collision(obstacles, @x, @y - movement)
-      self.y += -movement
-    end
+    self.y += -movement unless check_collision(obstacles, @x, @y - movement)
     catch_coin(coins)
   end
 
   def move_down(movement, coins, obstacles)
-    unless check_collision(obstacles, @x, @y + movement)
-      self.y += movement
-    end
+    self.y += movement unless check_collision(obstacles, @x, @y + movement)
     catch_coin(coins)
   end
 

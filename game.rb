@@ -16,9 +16,7 @@ class Game
   end
 
   def update
-    if @map.coins.length === 0
-      end_game
-    end
+    end_game if @map.coins.empty?
   end
   def elapsed
     Time.now - @time_start
