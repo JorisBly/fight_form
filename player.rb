@@ -12,21 +12,19 @@ class Player < Sprite
     case tile = map.tiles.find { |tile| tile.x == @x + delta_x && tile.y == @y + delta_y }
     when Wall
       tile.play_sound
+    when Coin
+      tile.play_sound
+      tile.remove
+      add_point
+      @x += delta_x
+      @y += delta_y
     else
       @x += delta_x
       @y += delta_y
     end
-    catch_coin(map.coins)
   end
 
   def add_point(point = 1)
     @points += point
-  end
-
-  def catch_coin(coins)
-    add_point if coins.find do |coin|
-      puts "xcoin : #{coin.x} ycoin : #{coin.y} | player : #{x} #{y}"
-      coin.catched(@x, @y)
-    end
   end
 end

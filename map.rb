@@ -1,8 +1,7 @@
 class Map
-  attr_reader :tiles ,:coins, :player, :width, :height
+  attr_reader :tiles, :player, :width, :height
   def initialize(file_path, tile_size)
     @tiles = []
-    @coins = []
     @tile_size = tile_size
     load_map(file_path)
   end
@@ -27,13 +26,17 @@ class Map
           @tiles << Wall.new('media/grass.png', 'media/sfx_coin.ogg' , x: x, y: y, width: @tile_size, height: @tile_size)
         when 'c'
           Sprite.new('media/terrain_stone_vertical_middle.svg', x: x, y: y, width: @tile_size, height: @tile_size)
-          @coins << Coin.new('media/coin.png', 'media/sfx_coin.ogg', x: x, y: y, width: @tile_size, height: @tile_size, z: 100)
+          @tiles << Coin.new('media/coin.png', 'media/sfx_coin.ogg', x: x, y: y, width: @tile_size, height: @tile_size, z: 100)
         when 'p'
           Sprite.new('media/terrain_stone_vertical_middle.svg', x: x, y: y, width: @tile_size, height: @tile_size)
           @player = [x, y]
         end
       end
     end
+  end
+
+  def everything_collected?
+    @tiles.none? Coin
   end
 
   # def generate_coins

@@ -6,22 +6,7 @@ class Coin < Sprite
     puts "Pièce initialisé: x=#{@x} y=#{@y} width=#{@width} height=#{@height}"
   end
 
-  def destroy
-    remove
-  end
-
   def play_sound
     @sound.play
   end
-
-  def catched(position_x, position_y)
-    if x === position_x  && y === position_y
-      puts "Catched !"
-      destroy
-      true
-    else
-      false
-    end
-  end
-
 end
