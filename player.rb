@@ -1,5 +1,5 @@
 class Player < Sprite
-  attr_reader :points
+  attr_reader :name, :points
 
   def initialize(name, max_width, max_height, path, **args)
     @name = name
