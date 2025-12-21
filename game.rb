@@ -34,13 +34,13 @@ class Game
 
   def on_key_down(event)
     if event.key == 'left'
-      @player.move_left(@tile_size, map.coins, map.tiles)
+      @player.move(-@tile_size, 0, map)
     elsif event.key == 'right'
-      @player.move_right(@tile_size, map.coins, map.tiles)
+      @player.move(+@tile_size, 0, map)
     elsif event.key == 'up'
-      @player.move_up(@tile_size, map.coins, map.tiles)
+      @player.move(0, -@tile_size, map)
     elsif event.key == 'down'
-      @player.move_down(@tile_size, map.coins, map.tiles)
+      @player.move(0, +@tile_size, map)
     end
   end
 

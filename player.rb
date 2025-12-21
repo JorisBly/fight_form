@@ -8,23 +8,15 @@ class Player < Sprite
     puts "Joueur initialisé: x=#{@x} y=#{@y} width=#{@width} height=#{@height}"
   end
 
-  def move_right(movement, coins, obstacles)
-    self.x += movement unless check_collision(obstacles, @x + movement, @y)
-    catch_coin(coins)
-  end
-  def move_left(movement,coins, obstacles)
-    self.x += -movement unless check_collision(obstacles, @x - movement, @y)
-    catch_coin(coins)
-  end
-
-  def move_up(movement,coins, obstacles)
-    self.y += -movement unless check_collision(obstacles, @x, @y - movement)
-    catch_coin(coins)
-  end
-
-  def move_down(movement, coins, obstacles)
-    self.y += movement unless check_collision(obstacles, @x, @y + movement)
-    catch_coin(coins)
+  def move(delta_x, delta_y, map)
+    case tile = map.tiles.find { |tile| tile.x == @x + delta_x && tile.y == @y + delta_y }
+    when Wall
+      tile.play_sound
+    else
+      @x += delta_x
+      @y += delta_y
+    end
+    catch_coin(map.coins)
   end
 
   def add_point(point = 1)
@@ -36,11 +28,5 @@ class Player < Sprite
       puts "xcoin : #{coin.x} ycoin : #{coin.y} | player : #{x} #{y}"
       coin.catched(@x, @y)
     end
-  end
-
-  def check_collision(obstacles, position_x, position_y)
-    return false unless obstacle = obstacles.find { |obstacle| obstacle.x == position_x && obstacle.y == position_y }
-    obstacle.play_sound
-    true
   end
 end
