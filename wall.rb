@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Wall < Sprite
-  attr_accessor :sound
+
   def initialize(path, sound, **args)
     super(path, **args)
     @sound = Sound.new(sound)

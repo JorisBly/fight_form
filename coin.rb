@@ -1,5 +1,5 @@
 class Coin < Sprite
-  attr_accessor :sound
+
   def initialize(path, sound, **args)
     super(path, **args)
     @sound = Sound.new(sound)

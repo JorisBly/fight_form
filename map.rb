@@ -1,7 +1,7 @@
 TILE = 30
 
 class Map
-  attr_accessor :tiles ,:coins
+  attr_reader :tiles ,:coins
   def initialize(file_path)
     @tiles = []
     @coins = []

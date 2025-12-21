@@ -2,7 +2,7 @@ require 'ruby2d'
 require './map'
 require './coin'
 class Game
-  attr_accessor :x_width, :y_height ,:time_start, :elapsed, :map
+  attr_accessor :time_start, :map
   def initialize(x_width, y_height, player)
     @player = player
     # @background = background
