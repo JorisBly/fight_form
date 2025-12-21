@@ -31,12 +31,8 @@ set borderless: false
 
 @game.start
 @player_position = Text.new("x: #{@player.x} y: #{@player.y}")
-@player_points = Text.new("Points: #{@player.points}",
-                          x: 120, y: 0,
-                          z: 10)
-@timer = Text.new("Time: #{@game.elapsed}",
-                  x: 200, y: 0,
-                  z: 200)
+@player_points = Text.new("Points: #{@player.points}", x: 120, y: 0, z: 10)
+@timer = Text.new("Time: #{@game.elapsed}", x: 200, y: 0, z: 200)
 
 @x_speed = 0
 @y_speed = 0
