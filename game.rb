@@ -2,7 +2,7 @@ require 'ruby2d'
 require './map'
 require './coin'
 class Game
-  attr_accessor :player, :time_start, :map
+  attr_accessor :player
   def initialize(map_filepath, tile_size: 30)
     @tile_size = tile_size
     @window = DSL.window
@@ -34,13 +34,13 @@ class Game
 
   def on_key_down(event)
     if event.key == 'left'
-      @player.move(-@tile_size, 0, map)
+      @player.move(-@tile_size, 0, @map)
     elsif event.key == 'right'
-      @player.move(+@tile_size, 0, map)
+      @player.move(+@tile_size, 0, @map)
     elsif event.key == 'up'
-      @player.move(0, -@tile_size, map)
+      @player.move(0, -@tile_size, @map)
     elsif event.key == 'down'
-      @player.move(0, +@tile_size, map)
+      @player.move(0, +@tile_size, @map)
     end
   end
 
