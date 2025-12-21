@@ -5,7 +5,7 @@ class Game
   WIDTH = 630
   HEIGHT = 480
   attr_accessor :player, :time_start, :map
-  def initialize
+  def initialize(map_filepath)
     @window = DSL.window
     @window.set title: "Fight Form"
 
@@ -31,7 +31,7 @@ class Game
     @window.set borderless: false
 
     @time_start = Time.now
-    @map = Map.new('media/map_1.txt')
+    @map = Map.new(map_filepath)
 
     @player_position = Text.new("x: #{@player.x} y: #{@player.y}")
     @player_points = Text.new("Points: #{@player.points}", x: 120, y: 0, z: 10)
