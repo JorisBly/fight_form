@@ -4,9 +4,9 @@ require './coin'
 class Game
   WIDTH = 630
   HEIGHT = 480
-  TILE_SIZE = 30
   attr_accessor :player, :time_start, :map
-  def initialize(map_filepath)
+  def initialize(map_filepath, tile_size: 30)
+    @tile_size = tile_size
     @window = DSL.window
     @window.set title: "Fight Form"
 
@@ -15,9 +15,9 @@ class Game
     @window.set borderless: false
 
     @time_start = Time.now
-    @map = Map.new(map_filepath)
+    @map = Map.new(map_filepath, @tile_size)
     @player = Player.new('Joris', 'media/player.png',
-      x: @map.player[0], y: @map.player[1], width: TILE_SIZE, height: TILE_SIZE, z: 100, show: true
+      x: @map.player[0], y: @map.player[1], width: @tile_size, height: @tile_size, z: 100, show: true
     )
 
     @player_position = Text.new("x: #{@player.x} y: #{@player.y}")
@@ -36,13 +36,13 @@ class Game
 
   def on_key_down(event)
     if event.key == 'left'
-      @player.move_left(TILE_SIZE, map.coins, map.tiles)
+      @player.move_left(@tile_size, map.coins, map.tiles)
     elsif event.key == 'right'
-      @player.move_right(TILE_SIZE, map.coins, map.tiles)
+      @player.move_right(@tile_size, map.coins, map.tiles)
     elsif event.key == 'up'
-      @player.move_up(TILE_SIZE, map.coins, map.tiles)
+      @player.move_up(@tile_size, map.coins, map.tiles)
     elsif event.key == 'down'
-      @player.move_down(TILE_SIZE, map.coins, map.tiles)
+      @player.move_down(@tile_size, map.coins, map.tiles)
     end
   end
 
