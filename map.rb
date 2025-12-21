@@ -1,5 +1,5 @@
 class Map
-  attr_reader :tiles ,:coins, :player
+  attr_reader :tiles ,:coins, :player, :width, :height
   def initialize(file_path, tile_size)
     @tiles = []
     @coins = []
@@ -8,8 +8,11 @@ class Map
   end
 
   def load_map(path)
-    File.readlines(path).each_with_index do |line, row|
-      line.chomp.chars.each_with_index do |char, col|
+    lines = File.readlines(path, chomp: true)
+    @width = lines.first.size * @tile_size
+    @height = lines.size * @tile_size
+    lines.each_with_index do |line, row|
+      line.chars.each_with_index do |char, col|
         x = col * @tile_size
         y = row * @tile_size
 
