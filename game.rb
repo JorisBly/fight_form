@@ -9,23 +9,15 @@ class Game
     @window = DSL.window
     @window.set title: "Fight Form"
 
-    @player = Player.new(
-      'Joris',
-      'media/player.png',
-      x: 30,
-      y: 30,
-      width: 30,
-      height: 30,
-      z: 100,
-      show: true
-    )
-
     @window.set viewport_width: WIDTH
     @window.set viewport_height: HEIGHT
     @window.set borderless: false
 
     @time_start = Time.now
     @map = Map.new(map_filepath)
+    @player = Player.new('Joris', 'media/player.png',
+      x: @map.player[0], y: @map.player[1], width: 30, height: 30, z: 100, show: true
+    )
 
     @player_position = Text.new("x: #{@player.x} y: #{@player.y}")
     @player_points = Text.new("Points: #{@player.points}", x: 120, y: 0, z: 10)

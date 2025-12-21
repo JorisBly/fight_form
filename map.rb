@@ -1,7 +1,7 @@
 TILE = 30
 
 class Map
-  attr_reader :tiles ,:coins
+  attr_reader :tiles ,:coins, :player
   def initialize(file_path)
     @tiles = []
     @coins = []
@@ -26,6 +26,9 @@ class Map
         when 'c'
           @tiles << Wall.new('media/terrain_stone_vertical_middle.svg', 'media/sfx_coin.ogg' , x: x, y: y, width: TILE, height: TILE)
           @coins << Coin.new('media/coin.png', 'media/sfx_coin.ogg', x: x, y: y, width: TILE, height: TILE, z: 100)
+        when 'p'
+          @tiles << Wall.new('media/terrain_stone_vertical_middle.svg', 'media/sfx_coin.ogg' , x: x, y: y, width: TILE, height: TILE)
+          @player = [x, y]
         end
       end
     end
