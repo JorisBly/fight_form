@@ -4,6 +4,7 @@ require './coin'
 class Game
   WIDTH = 630
   HEIGHT = 480
+  TILE_SIZE = 30
   attr_accessor :player, :time_start, :map
   def initialize(map_filepath)
     @window = DSL.window
@@ -16,7 +17,7 @@ class Game
     @time_start = Time.now
     @map = Map.new(map_filepath)
     @player = Player.new('Joris', 'media/player.png',
-      x: @map.player[0], y: @map.player[1], width: 30, height: 30, z: 100, show: true
+      x: @map.player[0], y: @map.player[1], width: TILE_SIZE, height: TILE_SIZE, z: 100, show: true
     )
 
     @player_position = Text.new("x: #{@player.x} y: #{@player.y}")
@@ -35,13 +36,13 @@ class Game
 
   def on_key_down(event)
     if event.key == 'left'
-      @player.move_left(30,map.coins, map.tiles)
+      @player.move_left(TILE_SIZE, map.coins, map.tiles)
     elsif event.key == 'right'
-      @player.move_right(30,map.coins, map.tiles)
+      @player.move_right(TILE_SIZE, map.coins, map.tiles)
     elsif event.key == 'up'
-      @player.move_up(30, map.coins, map.tiles)
+      @player.move_up(TILE_SIZE, map.coins, map.tiles)
     elsif event.key == 'down'
-      @player.move_down(30,map.coins, map.tiles)
+      @player.move_down(TILE_SIZE, map.coins, map.tiles)
     end
   end
 
