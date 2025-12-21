@@ -15,11 +15,12 @@ class Coin < Sprite
   end
 
   def catched(position_x, position_y)
-      if self.x === position_x  && self.y === position_y
-          puts "Catched !"
-          self.destroy
+    if self.x === position_x  && self.y === position_y
+      puts "Catched !"
+      self.destroy
       true
-    else false
+    else
+      false
     end
   end
 

@@ -11,14 +11,14 @@ class Game
   end
 
   def start
-      self.time_start = Time.now
-      @map = Map.new('media/map_1.txt')
+    self.time_start = Time.now
+    @map = Map.new('media/map_1.txt')
   end
 
   def update
     if @map.coins.length === 0
       self.end_game
-      end
+    end
   end
   def elapsed
     Time.now - @time_start

@@ -60,8 +60,8 @@ update do
   @timer.text = "Time: #{Time.at(@game.elapsed).utc.strftime("%M:%S")}"
   @game.update
   if Time.now - @game.time_start > 60
-   close
-   redis.save_score(@player)
+    close
+    redis.save_score(@player)
   end
 end
 

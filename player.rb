@@ -62,6 +62,5 @@ class Player < Sprite
       break if collision
     end
     collision
-        end
   end
-
+end
