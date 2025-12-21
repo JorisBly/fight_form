@@ -40,32 +40,37 @@ class Game
     @x_speed = 0
     @y_speed = 0
 
-    @window.on :key_down do |event|
-      if event.key == 'left'
-        @player.move_left(30,map.coins, map.tiles)
-      elsif event.key == 'right'
-        @player.move_right(30,map.coins, map.tiles)
-      elsif event.key == 'up'
-        @player.move_up(30, map.coins, map.tiles)
-      elsif event.key == 'down'
-        @player.move_down(30,map.coins, map.tiles)
-      end
-    end
-
-    @window.update do
-      # @player.move(@x_speed, @y_speed, coins, map.tiles)
-      @player_position.text = "x: #{@player.x} y: #{@player.y}"
-      @player_points.text = "Points: #{@player.points}"
-      @timer.text = "Time: #{Time.at(elapsed).utc.strftime("%M:%S")}"
-      end_game if @map.coins.empty?
-      if Time.now - time_start > 60
-        @window.close
-      end
-    end
+    @window.on(:key_down) { |event| on_key_down(event) }
+    @window.update { update }
   end
 
   def start
     @window.show
+  end
+
+  protected
+
+  def on_key_down(event)
+    if event.key == 'left'
+      @player.move_left(30,map.coins, map.tiles)
+    elsif event.key == 'right'
+      @player.move_right(30,map.coins, map.tiles)
+    elsif event.key == 'up'
+      @player.move_up(30, map.coins, map.tiles)
+    elsif event.key == 'down'
+      @player.move_down(30,map.coins, map.tiles)
+    end
+  end
+
+  def update
+    # @player.move(@x_speed, @y_speed, coins, map.tiles)
+    @player_position.text = "x: #{@player.x} y: #{@player.y}"
+    @player_points.text = "Points: #{@player.points}"
+    @timer.text = "Time: #{Time.at(elapsed).utc.strftime("%M:%S")}"
+    end_game if @map.coins.empty?
+    if Time.now - time_start > 60
+      @window.close
+    end
   end
 
   def elapsed
