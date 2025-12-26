@@ -1,67 +1,31 @@
 class Player < Sprite
-  attr_accessor :name, :max_width ,:max_height, :points
+  attr_reader :name, :points
 
-  def initialize(name, max_width, max_height, path, **args)
-    @name = name
+  def initialize(name, path, **args)
     super(path, **args)
-    @max_width = max_width
-    @max_height = max_height
+    @name = name
     @points = 0
     puts "Joueur initialisé: x=#{@x} y=#{@y} width=#{@width} height=#{@height}"
   end
 
-  def move_right(movement, coins, obstacles)
-    unless self.check_collision(obstacles, @x + movement, @y)
-      self.x += movement
+  def move(delta_x, delta_y, map)
+    case tile = map.tiles.find { |tile| tile.x == @x + delta_x && tile.y == @y + delta_y }
+    when Wall
+      tile.play_sound
+    when Coin
+      tile.play_sound
+      tile.remove
+      map.tiles.delete(tile)
+      add_point
+      @x += delta_x
+      @y += delta_y
+    else
+      @x += delta_x
+      @y += delta_y
     end
-      self.catch_coin(coins)
-  end
-  def move_left(movement,coins, obstacles)
-    unless self.check_collision(obstacles, @x - movement, @y)
-    self.x += -movement
-    end
-    self.catch_coin(coins)
-  end
-
-  def move_up(movement,coins, obstacles)
-    unless self.check_collision(obstacles, @x, @y - movement)
-      self.y += -movement
-    end
-      self.catch_coin(coins)
-  end
-
-  def move_down(movement, coins, obstacles)
-    unless self.check_collision(obstacles, @x, @y + movement)
-    self.y += movement
-    end
-    self.catch_coin(coins)
   end
 
   def add_point(point = 1)
     @points += point
   end
-  def get_points
-    @points
-  end
-
-  def catch_coin(coins)
-    catched = false
-    coins.each do |coin|
-      puts "xcoin : #{coin.x} ycoin : #{coin.y} | player : #{self.x} #{self.y}"
-      catched = coin.catched(@x, @y)
-        self.add_point
-      break if catched
-    end
-  end
-
-  def check_collision(obstacles, position_x, position_y)
-    collision = false
-    obstacles.each do |obstacle|
-      collision = obstacle.collision(position_x, position_y)
-      obstacle.play_sound
-      break if collision
-    end
-    collision
-        end
-  end
-
+end
