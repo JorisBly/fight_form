@@ -9,7 +9,7 @@ require './database'
 redis = Database.new(host: "localhost", port: 6379)
 set title: "Fight Form"
 WIDTH = 1280
-HEIGHT = 704
+HEIGHT = 720
 set viewport_width: WIDTH
 set viewport_height: HEIGHT
 set borderless: false
@@ -85,7 +85,7 @@ update do
     current_screen.update
   when Game
     current_screen.update
-    if Time.now - current_screen.time_start > 60
+    if Time.now - current_screen.time_start > 10
       redis.save_score(current_screen.player)
       current_screen.close
       current_screen = MainScreen.new
