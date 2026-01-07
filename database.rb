@@ -4,8 +4,11 @@ class Database < Redis
     super(**args)
   end
 
+  def get_scores()
+    zrange("scores", 0, -1, with_scores: true)
+  end
   def get_score(player)
-
+    # zrange("scores", 0, -1)
   end
 
   def save_score(player)

@@ -3,7 +3,7 @@ require './map'
 require './coin'
 class Game
   attr_accessor :x_width, :y_height ,:time_start, :elapsed, :map, :player
-  def initialize(x_width, y_height, player_name: 'Joris')
+  def initialize(x_width, y_height, player_name: 'Lolo')
     @player =  Player.new(
       player_name,
       WIDTH,
@@ -45,6 +45,13 @@ class Game
     Time.now - @time_start
   end
 
+  def close
+    @player.remove
+    @map.remove
+    @timer.remove
+    @player_position.remove
+    @player_points.remove
+  end
   def end_game
     close
   end
