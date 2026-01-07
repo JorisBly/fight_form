@@ -3,16 +3,16 @@ require './map'
 require './coin'
 class Game
   attr_accessor :x_width, :y_height ,:time_start, :elapsed, :map, :player
-  def initialize(x_width, y_height, player_name, map_path)
+  def initialize(x_width, y_height, player_name, map_path, tile_size)
     @player =  Player.new(
       player_name,
       WIDTH,
       HEIGHT,
       'media/player.png',
-      x: 640,
-      y: 384,
-      width: 64,
-      height: 64,
+      x: 896,
+      y: 512,
+      width: tile_size,
+      height: tile_size,
       z: 100,
       show: true
     )
@@ -20,11 +20,12 @@ class Game
     @x_width = x_width
     @y_height = y_height
     @map_path = map_path
+    @tile_size = tile_size
   end
 
   def start
       self.time_start = Time.now
-      @map = Map.new(@map_path, 64)
+      @map = Map.new(@map_path, @tile_size)
       @player_position = Text.new("x: #{@player.x} y: #{@player.y}")
       @player_points = Text.new("Points: #{@player.points}",
                                 x: 120, y: 0,
@@ -52,6 +53,7 @@ class Game
     case collision.length
     when 2
       collision[1].catched
+      @map.coins.reject!{ |coin| coin.x === offset_x && coin.y === offset_y }
       @player.add_point
       @map.update_camera(@player.x - offset_x, @player.y - offset_y)
     when 1
