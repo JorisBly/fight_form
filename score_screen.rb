@@ -5,7 +5,7 @@ class ScoreScreen
     @selected_score = 0
     @scores = scores
     @scores_text = []
-    @back_button = Text.new('<ESC> Back', size: 36, y: 320, x: 100)
+    @back_button = Text.new('<ESC> Back', size: 36, y: 650, x: 600)
     display_scores
   end
 
@@ -14,8 +14,10 @@ class ScoreScreen
   end
 
   def display_scores
+    last_index = 0
     @scores.each do |score|
-      @scores_text << Text.new("#{score[0]} : #{score[1]}", size: 36, x: 100, y: 250)
+      @scores_text << Text.new("#{score[0]} : #{score[1]}", size: 36, x: 600, y: 250 + (last_index * 50))
+      last_index += 1
     end
   end
   def navigate
