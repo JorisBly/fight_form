@@ -20,8 +20,6 @@ current_screen = MainScreen.new
 
 
 
-
-
 on :key_down do |event|
   case current_screen
   when MainScreen
@@ -33,7 +31,7 @@ on :key_down do |event|
               close
           when 'game'
               current_screen.close
-              current_screen = Game.new(WIDTH, HEIGHT, player_name: 'Lolo')
+              current_screen = Game.new(WIDTH, HEIGHT, ARGV[0] || 'Player', ARGV[1] || 'media/map_1.txt')
               current_screen.start
           when 'scores'
               current_screen.close

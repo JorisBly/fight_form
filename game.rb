@@ -3,7 +3,7 @@ require './map'
 require './coin'
 class Game
   attr_accessor :x_width, :y_height ,:time_start, :elapsed, :map, :player
-  def initialize(x_width, y_height, player_name: 'Lolo')
+  def initialize(x_width, y_height, player_name, map_path)
     @player =  Player.new(
       player_name,
       WIDTH,
@@ -19,11 +19,12 @@ class Game
     # @background = background
     @x_width = x_width
     @y_height = y_height
+    @map_path = map_path
   end
 
   def start
       self.time_start = Time.now
-      @map = Map.new('media/map_1.txt')
+      @map = Map.new(@map_path, 30)
       @player_position = Text.new("x: #{@player.x} y: #{@player.y}")
       @player_points = Text.new("Points: #{@player.points}",
                                 x: 120, y: 0,
