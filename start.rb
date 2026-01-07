@@ -8,11 +8,11 @@ require './database'
 
 redis = Database.new(host: "localhost", port: 6379)
 set title: "Fight Form"
-WIDTH = 1500
-HEIGHT = 750
+WIDTH = 1280
+HEIGHT = 704
 set viewport_width: WIDTH
 set viewport_height: HEIGHT
-set borderless: true
+set borderless: false
 set fullscreen: false
 
 
@@ -67,13 +67,13 @@ on :key_down do |event|
     when Game
      case event.key
         when 'left'
-          current_screen.player.move_left(30, current_screen.map.coins, current_screen.map.tiles)
+          current_screen.move(current_screen.player.x - 64, current_screen.player.y)
         when 'right'
-          current_screen.player.move_right(30, current_screen.map.coins, current_screen.map.tiles)
+          current_screen.move(current_screen.player.x + 64, current_screen.player.y)
         when 'up'
-          current_screen.player.move_up(30, current_screen.map.coins, current_screen.map.tiles)
+          current_screen.move(current_screen.player.x , current_screen.player.y - 64)
         when 'down'
-          current_screen.player.move_down(30, current_screen.map.coins, current_screen.map.tiles)
+          current_screen.move(current_screen.player.x , current_screen.player.y + 64)
     end
   end
 
@@ -85,7 +85,7 @@ update do
     current_screen.update
   when Game
     current_screen.update
-    if Time.now - current_screen.time_start > 5
+    if Time.now - current_screen.time_start > 60
       redis.save_score(current_screen.player)
       current_screen.close
       current_screen = MainScreen.new

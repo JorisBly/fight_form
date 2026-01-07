@@ -14,13 +14,17 @@ class Coin < Sprite
     @sound.play
   end
 
-  def catched(position_x, position_y)
+  def collision(position_x, position_y)
       if self.x === position_x  && self.y === position_y
-          puts "Catched !"
-          self.destroy
       true
     else false
     end
+  end
+
+  def catched
+    puts "Catched !"
+    self.play_sound
+    self.destroy
   end
 
 end

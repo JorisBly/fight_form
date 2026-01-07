@@ -9,10 +9,10 @@ class Game
       WIDTH,
       HEIGHT,
       'media/player.png',
-      x: 30,
-      y: 30,
-      width: 30,
-      height: 30,
+      x: 64,
+      y: 64,
+      width: 64,
+      height: 64,
       z: 100,
       show: true
     )
@@ -24,7 +24,7 @@ class Game
 
   def start
       self.time_start = Time.now
-      @map = Map.new(@map_path, 30)
+      @map = Map.new(@map_path, 64)
       @player_position = Text.new("x: #{@player.x} y: #{@player.y}")
       @player_points = Text.new("Points: #{@player.points}",
                                 x: 120, y: 0,
@@ -46,6 +46,31 @@ class Game
     Time.now - @time_start
   end
 
+  def move(offset_x, offset_y)
+    tiles = @map.tiles + @map.coins
+    collision = tiles.select{ |item| item.x == offset_x && item.y == offset_y }
+    case collision.length
+    when 2
+      collision[1].catched
+      @map.update_camera(@player.x - offset_x, @player.y - offset_y)
+    when 1
+      if collision[0].path.include?("terrain")
+        @map.update_camera(@player.x - offset_x, @player.y - offset_y)
+      end
+    when nil
+      @map.update_camera(@player.x - offset_x, @player.y - offset_y)
+    end
+  end
+
+  def check_collision(obstacles, position_x, position_y)
+    collision = false
+    obstacles.each do |obstacle|
+      collision = obstacle.collision(position_x, position_y)
+      break if collision
+    end
+    collision
+  end
+
   def close
     @player.remove
     @map.remove
@@ -56,4 +81,6 @@ class Game
   def end_game
     close
   end
+
+
 end

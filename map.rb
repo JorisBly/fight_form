@@ -30,6 +30,18 @@ class Map
     end
   end
 
+  def update_camera(offset_x, offset_y)
+    @tiles.each do |tile|
+      tile.x += offset_x
+      tile.y += offset_y
+    end
+
+    @coins.each do |coin|
+      coin.x += offset_x
+      coin.y += offset_y
+    end
+  end
+
   def remove()
     @coins.each do |coin|
       coin.remove

@@ -10,33 +10,6 @@ class Player < Sprite
     puts "Joueur initialisé: x=#{@x} y=#{@y} width=#{@width} height=#{@height}"
   end
 
-  def move_right(movement, coins, obstacles)
-    unless self.check_collision(obstacles, @x + movement, @y)
-      self.x += movement
-    end
-      self.catch_coin(coins)
-  end
-  def move_left(movement,coins, obstacles)
-    unless self.check_collision(obstacles, @x - movement, @y)
-    self.x += -movement
-    end
-    self.catch_coin(coins)
-  end
-
-  def move_up(movement,coins, obstacles)
-    unless self.check_collision(obstacles, @x, @y - movement)
-      self.y += -movement
-    end
-      self.catch_coin(coins)
-  end
-
-  def move_down(movement, coins, obstacles)
-    unless self.check_collision(obstacles, @x, @y + movement)
-    self.y += movement
-    end
-    self.catch_coin(coins)
-  end
-
   def add_point(point = 1)
     @points += point
   end
@@ -58,7 +31,6 @@ class Player < Sprite
     collision = false
     obstacles.each do |obstacle|
       collision = obstacle.collision(position_x, position_y)
-      obstacle.play_sound
       break if collision
     end
     collision
