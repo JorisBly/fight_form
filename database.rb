@@ -11,7 +11,7 @@ class Database < Redis
     # zrange("scores", 0, -1)
   end
 
-  def save_score(player)
-    zadd("scores",  player.points, player.name)
+  def save_score(player, time)
+    zadd("scores",  time, player.name)
   end
 end
