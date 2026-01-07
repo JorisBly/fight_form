@@ -9,8 +9,8 @@ class Game
       WIDTH,
       HEIGHT,
       'media/player.png',
-      x: 64,
-      y: 64,
+      x: 640,
+      y: 384,
       width: 64,
       height: 64,
       z: 100,
@@ -52,6 +52,7 @@ class Game
     case collision.length
     when 2
       collision[1].catched
+      @player.add_point
       @map.update_camera(@player.x - offset_x, @player.y - offset_y)
     when 1
       if collision[0].path.include?("terrain")
