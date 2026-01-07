@@ -17,15 +17,6 @@ class Player < Sprite
     @points
   end
 
-  def catch_coin(coins)
-    catched = false
-    coins.each do |coin|
-      puts "xcoin : #{coin.x} ycoin : #{coin.y} | player : #{self.x} #{self.y}"
-      catched = coin.catched(@x, @y)
-        self.add_point
-      break if catched
-    end
-  end
 
   def check_collision(obstacles, position_x, position_y)
     collision = false
