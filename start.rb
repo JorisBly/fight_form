@@ -4,6 +4,7 @@ require './wall'
 require './game'
 require './main_screen'
 require './score_screen'
+require './select_map_screen'
 require './redis_db'
 require './models/mongo_db'
 
@@ -17,10 +18,7 @@ set viewport_height: HEIGHT
 set borderless: false
 set fullscreen: false
 
-
-current_screen = MainScreen.new 
-
-
+current_screen = MainScreen.new
 
 on :key_down do |event|
   case current_screen
@@ -28,65 +26,56 @@ on :key_down do |event|
     case event.key
     when 'return'
       choice = current_screen.validated_choice
-        case choice
-          when 'close'
-              close
-          when 'game'
-              current_screen.close
-              current_screen = Game.new(WIDTH, HEIGHT, ARGV[0] || 'Player', ARGV[1] || JSON.parse(Level.get_map('level_1')), TILE_SIZE)
-              current_screen.start
-          when 'scores'
-              current_screen.close
-              current_screen = ScoreScreen.new(redis.get_scores)
+      case choice
+      when 'close' then close
+      when 'game'
+        current_screen.close
+        current_screen = SelectMapScreen.new
+      when 'scores'
+        current_screen.close
+        current_screen = ScoreScreen.new(redis.get_scores)
       end
-    when 'down'
-      current_screen.selected_choice += 1
-    when 'up'
-      current_screen.selected_choice -= 1
+    when 'down' then current_screen.selected_choice += 1
+    when 'up'   then current_screen.selected_choice -= 1
     end
 
-  end
-end
-
-on :key_down do |event|
-  case current_screen
-    when ScoreScreen
-      case event.key
-        when 'escape'
-          current_screen.close
-          current_screen = MainScreen.new
-        when 'down'
-          current_screen.selected_score += 1
-    when 'up'
-          current_screen.selected_score -= 1
+  when ScoreScreen
+    case event.key
+    when 'escape'
+      current_screen.close
+      current_screen = MainScreen.new
+    when 'down' then current_screen.selected_score += 1
+    when 'up'   then current_screen.selected_score -= 1
     end
 
-  end
-end
+  when SelectMapScreen
+    case event.key
+    when 'return'
+      choice = current_screen.validated_choice
+      current_screen.close
+      current_screen = Game.new(WIDTH, HEIGHT, ARGV[0] || 'Player', JSON.parse(Level.get_map(choice)), TILE_SIZE)
+      current_screen.start
+    when 'escape'
+      current_screen.close
+      current_screen = MainScreen.new
+    when 'down' then current_screen.selected_choice += 1
+    when 'up'   then current_screen.selected_choice -= 1
+    end
 
-on :key_down do |event|
-  case current_screen
-    when Game
-     case event.key
-        when 'left'
-          current_screen.move(current_screen.player.x - TILE_SIZE, current_screen.player.y)
-        when 'right'
-          current_screen.move(current_screen.player.x + TILE_SIZE, current_screen.player.y)
-        when 'up'
-          current_screen.move(current_screen.player.x , current_screen.player.y - TILE_SIZE)
-        when 'down'
-          current_screen.move(current_screen.player.x , current_screen.player.y + TILE_SIZE)
+  when Game
+    case event.key
+    when 'left'  then current_screen.move(current_screen.player.x - TILE_SIZE, current_screen.player.y)
+    when 'right' then current_screen.move(current_screen.player.x + TILE_SIZE, current_screen.player.y)
+    when 'up'    then current_screen.move(current_screen.player.x, current_screen.player.y - TILE_SIZE)
+    when 'down'  then current_screen.move(current_screen.player.x, current_screen.player.y + TILE_SIZE)
     end
   end
-
 end
 
 update do
+  current_screen.update
   case current_screen
-  when MainScreen
-    current_screen.update
   when Game
-    current_screen.update
     if current_screen.map.coins.empty?
       redis.save_score(current_screen.player, current_screen.elapsed)
       current_screen.close
