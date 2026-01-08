@@ -1,5 +1,5 @@
 require 'redis'
-class Database < Redis
+class RedisDb < Redis
   def initialize(**args)
     super(**args)
   end
