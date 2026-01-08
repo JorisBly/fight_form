@@ -1,11 +1,11 @@
 class ScoreScreen
   attr_accessor :title , :scores, :selected_score, :back_button, :scores_text
   def initialize(scores)
-    @title = Text.new('FIGHT FORM',size: 150, y: 40, x: 250)
+    @title = Text.new('FIGHT FORM',size: 150, y: 40, x: 500)
     @selected_score = 0
     @scores = scores
     @scores_text = []
-    @back_button = Text.new('<ESC> Back', size: 36, y: 650, x: 600)
+    @back_button = Text.new('<ESC> Back', size: 64, y: 950, x: (WIDTH / 2) - 150)
     display_scores
   end
 
@@ -16,7 +16,7 @@ class ScoreScreen
   def display_scores
     last_index = 0
     @scores.each do |score|
-      @scores_text << Text.new("#{score[0]} : #{score[1]}", size: 36, x: 600, y: 250 + (last_index * 50))
+      @scores_text << Text.new("#{score[0]} : #{score[1].truncate(2)}", size: 64, x: (WIDTH / 2) - 100, y: (HEIGHT / 4) + (last_index * 100))
       last_index += 1
     end
   end
