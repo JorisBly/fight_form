@@ -3,12 +3,12 @@ require './map'
 require './coin'
 class Game
   attr_accessor :x_width, :y_height ,:time_start, :elapsed, :map, :player
-  def initialize(x_width, y_height, player_name, map_path, tile_size)
+  def initialize(x_width, y_height, player_name, level, tile_size)
     @player =  Player.new(
       player_name,
       WIDTH,
       HEIGHT,
-      map_path['player'],
+      level['player'],
       x: 896,
       y: 512,
       width: tile_size,
@@ -16,16 +16,17 @@ class Game
       z: 100,
       show: true
     )
+    @level = level
     # @background = background
     @x_width = x_width
     @y_height = y_height
-    @map_path = map_path['name']
+    @map_path = level['name']
     @tile_size = tile_size
   end
 
   def start
       self.time_start = Time.now
-      @map = Map.new(@map_path, @tile_size)
+      @map = Map.new(@tile_size, @level )
       @player_position = Text.new("x: #{@player.x} y: #{@player.y}")
       @player_points = Text.new("Points: #{@player.points}",
                                 x: 120, y: 0,
