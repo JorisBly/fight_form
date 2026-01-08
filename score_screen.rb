@@ -9,7 +9,7 @@ class ScoreScreen
     display_scores
   end
 
-  def update()
+  def update
     navigate
   end
 
@@ -21,8 +21,11 @@ class ScoreScreen
     end
   end
   def navigate
-    @scores[(@selected_score - 1) % 2].color = 'white'
-    @scores[(@selected_score) % 2].color = 'blue'
+    if @scores.length > 0
+      @scores[(@selected_score - 1) % 2].color = 'white'
+      @scores[(@selected_score) % 2].color = 'blue'
+    end
+
   end
 
   def close
