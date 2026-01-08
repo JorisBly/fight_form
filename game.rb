@@ -27,12 +27,11 @@ class Game
   def start
       self.time_start = Time.now
       @map = Map.new(@tile_size, @level )
-      @player_position = Text.new("x: #{@player.x} y: #{@player.y}")
-      @player_points = Text.new("Points: #{@player.points}",
-                                x: 120, y: 0,
+      @player_points = Text.new("Pièces: #{@player.points}",
+                                x: 120, y: 0, size: 64,
                                 z: 10)
       @timer = Text.new("Time: #{self.elapsed}",
-                        x: 200, y: 0,
+                        x: 500, y: 0, size: 64,
                         z: 200)
   end
 
@@ -40,8 +39,7 @@ class Game
     if @map.coins.length === 0
       self.end_game
     end
-    @player_position.text = "x: #{@player.x} y: #{@player.y}"
-    @player_points.text = "Points: #{@player.points}"
+    @player_points.text = "Pièces: #{@player.points}"
     @timer.text = "Time: #{Time.at(self.elapsed).utc.strftime("%M:%S")}"
   end
   def elapsed
@@ -79,7 +77,6 @@ class Game
     @player.remove
     @map.remove
     @timer.remove
-    @player_position.remove
     @player_points.remove
   end
   def end_game
