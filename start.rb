@@ -4,9 +4,10 @@ require './wall'
 require './game'
 require './main_screen'
 require './score_screen'
-require './database'
+require './redis_db'
+require './models/mongo_db'
 
-redis = Database.new(host: "localhost", port: 6379)
+redis = RedisDb.new(host: "localhost", port: 6379)
 set title: "Fight Form"
 WIDTH = 1920
 HEIGHT = 1080
@@ -32,7 +33,7 @@ on :key_down do |event|
               close
           when 'game'
               current_screen.close
-              current_screen = Game.new(WIDTH, HEIGHT, ARGV[0] || 'Player', ARGV[1] || 'media/map_1.txt', TILE_SIZE)
+              current_screen = Game.new(WIDTH, HEIGHT, ARGV[0] || 'Player', ARGV[1] || JSON.parse(Level.get_map('level_1')), TILE_SIZE)
               current_screen.start
           when 'scores'
               current_screen.close
@@ -86,7 +87,7 @@ update do
     current_screen.update
   when Game
     current_screen.update
-    if current_screen.elapsed >= 5
+    if current_screen.map.coins.empty?
       redis.save_score(current_screen.player, current_screen.elapsed)
       current_screen.close
       current_screen = MainScreen.new

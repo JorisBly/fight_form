@@ -7,4 +7,9 @@ class Level
   field :ground, type: String
   field :coin, type: String
   field  :player, type: String
+
+  def  self.get_map(level_name)
+    self.where(name: /#{level_name}/i).first.to_json
+  end
+
 end

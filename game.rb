@@ -8,7 +8,7 @@ class Game
       player_name,
       WIDTH,
       HEIGHT,
-      'media/player.png',
+      map_path['player'],
       x: 896,
       y: 512,
       width: tile_size,
@@ -19,7 +19,7 @@ class Game
     # @background = background
     @x_width = x_width
     @y_height = y_height
-    @map_path = map_path
+    @map_path = map_path['name']
     @tile_size = tile_size
   end
 
